@@ -26,10 +26,10 @@ function UploadForm() {
 
       setLoading(true);
 
-      const res = await axios.post(
-        "http://localhost:5000/api/upload",
+      const res =axios.post(
+        import.meta.env.VITE_API_URL + "/api/upload",
         formData
-      );
+        );
 
       setMessage("Summary generated and email sent!");
 
