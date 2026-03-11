@@ -9,7 +9,14 @@ const uploadRoutes = require("./routes/uploadRoutes");
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: "*"
+}));
+const fs = require("fs");
+
+if (!fs.existsSync("uploads")) {
+  fs.mkdirSync("uploads");
+}
 app.use(express.json());
 
 app.use("/api", uploadRoutes);
