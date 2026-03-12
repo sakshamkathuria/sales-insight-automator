@@ -24,20 +24,23 @@ function UploadForm() {
 
     try {
 
-      setLoading(true);
+  setLoading(true);
 
-      const res =axios.post(
-        import.meta.env.VITE_API_URL + "/api/upload",
-        formData
-        );
+  const res = await axios.post(
+    import.meta.env.VITE_API_URL + "/api/upload",
+    formData
+  );
 
-      setMessage("Summary generated and email sent!");
+  setMessage("Summary generated and email sent!");
 
-    } catch (error) {
+} catch (error) {
 
-      setMessage("Error processing file");
+  console.error(error);
+  setMessage("Error processing file");
 
-    }
+}
+
+setLoading(false);
 
     setLoading(false);
   };
