@@ -35,13 +35,12 @@ exports.uploadFile = (req, res) => {
       });
 
     } catch (error) {
+  console.error("UPLOAD ERROR:", error);
 
-      res.status(500).json({
-        message: "Processing failed",
-        error: error.message
-      });
-
-    }
+  res.status(500).json({
+    message: error.message
+  });
+}
 
   });
 
