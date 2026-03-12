@@ -7,24 +7,30 @@ const swaggerSpec = require("./config/swagger");
 
 const uploadRoutes = require("./routes/uploadRoutes");
 
-const app = express();
-
-app.use(cors({
-  origin: "*"
-}));
+const path = require("path");
 const fs = require("fs");
 
-if (!fs.existsSync("uploads")) {
-  fs.mkdirSync("uploads");
+const app = express();
+
+// Allow frontend requests
+app.use(cors({ origin: "*" }));
+
+// Ensure uploads folder exists
+const uploadDir = path.join(__dirname, "uploads");
+
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir);
 }
+
 app.use(express.json());
 
+// Routes
 app.use("/api", uploadRoutes);
 
 // Swagger Docs
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-// Health Check Endpoint (Cloud Ready)
+// Health check
 app.get("/health", (req, res) => {
   res.status(200).json({
     status: "OK",
