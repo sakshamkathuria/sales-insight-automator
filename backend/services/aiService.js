@@ -23,7 +23,12 @@ Provide:
 - Key insights
 `;
 
-  const result = await model.generateContent(prompt);
+  const result = await Promise.race([
+  model.generateContent(prompt),
+  new Promise((_, reject) =>
+    setTimeout(() => reject(new Error("Gemini timeout")), 60000)
+  )
+]);
 
   const response = result.response;
 
